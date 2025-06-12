@@ -7,6 +7,7 @@ public enum PlayerState
     Idle,
     Move,
     Jump,
+    Air,
     Attack
 }
 
@@ -21,19 +22,19 @@ public class PlayerMaster : MonoBehaviour
     [SerializeField] private CharacterController characterController;
 
     public PlayerState currentState;
-    private PlayerContex contex;
+    private PlayerContex playerContex;
 
     private void Awake()
     {
-        contex = new PlayerContex
+        playerContex = new PlayerContex
         {
            playerData = this.playerData,
            characterController = this.characterController,
            master = this
         };
 
-        move.Initialized(contex);
-        jump.Initialized(contex);
+        move.Initialized(playerContex);
+        jump.Initialized(playerContex);
     }
 
     private void Update()
@@ -44,6 +45,9 @@ public class PlayerMaster : MonoBehaviour
     private void HandlerState()
     {
         move.HandleMove();
+        jump.HandlerJump();
+
+        playerContex.characterController.Move(playerContex.velocity * Time.deltaTime);
     }
 
 }
