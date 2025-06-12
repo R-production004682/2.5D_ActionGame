@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
@@ -19,8 +17,6 @@ public class PlayerJump : MonoBehaviour
         // 接地しているならばジャンプ可能
         if (playerContex.characterController.isGrounded == true)
         {
-            playerContex.master.CurrentState = PlayerState.Idle;
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 playerContex.master.CurrentState = PlayerState.Jump;

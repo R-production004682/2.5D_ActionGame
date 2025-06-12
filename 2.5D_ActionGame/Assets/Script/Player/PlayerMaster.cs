@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerState
@@ -32,7 +29,9 @@ public class PlayerMaster : MonoBehaviour
         {
             if(currentState != value)
             {
+#if UNITY_EDITOR || DEBUG
                 Debug.Log($"[State] {currentState} => {value}");
+#endif
                 currentState = value;
             }
         }
