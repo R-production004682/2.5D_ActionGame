@@ -12,25 +12,26 @@ public class PlayerJump : MonoBehaviour
     }
 
     /// <summary>
-    /// Playerのジャンプロジック
+    /// ジャンプロジック
     /// </summary>
     public void HandlerJump()
     {
-        // Playerの接地判定
+        // 接地しているならばジャンプ可能
         if (playerContex.characterController.isGrounded == true)
         {
-            playerContex.master.currentState = PlayerState.Idle;
+            playerContex.master.CurrentState = PlayerState.Idle;
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                playerContex.master.currentState = PlayerState.Jump;
+                playerContex.master.CurrentState = PlayerState.Jump;
                 playerContex.velocity.y = playerContex.playerData.jumpPower;
             }
         }
         else
         {
+            // 空中にいる間は重力適用
             playerContex.velocity.y -= playerContex.playerData.gravity * Time.deltaTime;
-            playerContex.master.currentState = PlayerState.Air;
+            playerContex.master.CurrentState = PlayerState.Air;
         }
     }
 }

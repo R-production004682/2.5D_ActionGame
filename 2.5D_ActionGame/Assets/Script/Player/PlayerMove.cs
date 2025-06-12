@@ -11,30 +11,32 @@ public class PlayerMove : MonoBehaviour
         playerContex = contex;
     }
 
+    /// <summary>
+    /// 移動のロジック
+    /// </summary>
     public void HandleMove()
     {
         var horizontal = Input.GetAxis("Horizontal");
         var direction = new Vector2(horizontal, 0);
         
-        if(playerContex.master.currentState == PlayerState.Air)
-        {
-            // Playerが空中に居る際の移動速度
-            playerContex.velocity.x = direction.x * playerContex.playerData.airSpeed;
-        }
-        else
-        {
-            // Playerが空中以外にいる際の移動速度
-            playerContex.velocity.x = direction.x * playerContex.playerData.moveSpeed;
-        }
+        var moveSpeed = (playerContex.master.CurrentState == PlayerState.Air)
+                      ? playerContex.playerData.airSpeed 
+                      : playerContex.playerData.moveSpeed;
 
-        // 入力が0に近しければIdleへ変化させる
-        if (Mathf.Abs(horizontal) < 0.01f)
+        playerContex.velocity.x = direction.x * moveSpeed;
+
+        // 状態遷移の制御（空中にいる間は更新しない）
+        if(playerContex.master.CurrentState != PlayerState.Air && playerContex.master.CurrentState != PlayerState.Jump)
         {
-            playerContex.master.currentState = PlayerState.Idle;
-        }
-        else
-        {
-            playerContex.master.currentState = PlayerState.Move;
+            // 入力が0に近しければIdleへ変化させる
+            if (Mathf.Abs(horizontal) < 0.01f)
+            {
+                playerContex.master.CurrentState = PlayerState.Idle;
+            }
+            else
+            {
+                playerContex.master.CurrentState = PlayerState.Move;
+            }
         }
     }
 }

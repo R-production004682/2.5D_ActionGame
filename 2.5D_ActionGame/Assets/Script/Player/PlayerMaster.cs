@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerState
@@ -21,8 +22,22 @@ public class PlayerMaster : MonoBehaviour
     [Header("コンポーネント")]
     [SerializeField] private CharacterController characterController;
 
-    public PlayerState currentState;
     private PlayerContex playerContex;
+
+    private PlayerState currentState;
+    public PlayerState CurrentState
+    {
+        get => currentState;
+        set
+        {
+            if(currentState != value)
+            {
+                Debug.Log($"[State] {currentState} => {value}");
+                currentState = value;
+            }
+        }
+    }
+
 
     private void Awake()
     {
@@ -40,14 +55,14 @@ public class PlayerMaster : MonoBehaviour
     private void Update()
     {
         HandlerState();
+
+        playerContex.characterController.Move(playerContex.velocity * Time.deltaTime);
     }
 
     private void HandlerState()
     {
         move.HandleMove();
         jump.HandlerJump();
-
-        playerContex.characterController.Move(playerContex.velocity * Time.deltaTime);
     }
 
 }
