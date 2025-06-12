@@ -15,7 +15,17 @@ public class PlayerMove : MonoBehaviour
     {
         var horizontal = Input.GetAxis("Horizontal");
         var direction = new Vector2(horizontal, 0);
-        var velocity = (direction * playerContex.playerData.moveSpeed) * Time.deltaTime;
+        
+        if(playerContex.master.currentState == PlayerState.Air)
+        {
+            // Player‚ª‹ó’†‚É‹‚éÛ‚ÌˆÚ“®‘¬“x
+            playerContex.velocity.x = direction.x * playerContex.playerData.airSpeed;
+        }
+        else
+        {
+            // Player‚ª‹ó’†ˆÈŠO‚É‚¢‚éÛ‚ÌˆÚ“®‘¬“x
+            playerContex.velocity.x = direction.x * playerContex.playerData.moveSpeed;
+        }
 
         // “ü—Í‚ª0‚É‹ß‚µ‚¯‚ê‚ÎIdle‚Ö•Ï‰»‚³‚¹‚é
         if (Mathf.Abs(horizontal) < 0.01f)
@@ -25,7 +35,6 @@ public class PlayerMove : MonoBehaviour
         else
         {
             playerContex.master.currentState = PlayerState.Move;
-            playerContex.characterController.Move(velocity);
         }
     }
 }
