@@ -12,25 +12,24 @@ public class PlayerJump : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒWƒƒƒ“ƒvƒƒWƒbƒN
+    /// ã‚¸ãƒ£ãƒ³ãƒ—ã®ãƒ­ã‚¸ãƒƒã‚¯
     /// </summary>
     public void HandlerJump()
     {
         var isGround = playerContex.characterController.isGrounded;
 
-        // Ú’n‚µ‚½uŠÔ‚¾‚¯ujumpCountv‚ğƒŠƒZƒbƒg
+        // ç€åœ°ã—ãŸç¬é–“ã ã‘ jumpCounter ã‚’ãƒªã‚»ãƒƒãƒˆ
         if (isGround && !wasGroundedLastFrame)
         {
             jumpCounter = 0;
         }
 
-        // ƒWƒƒƒ“ƒv‚Ì“ü—Í‚ª‚ ‚èAƒWƒƒƒ“ƒv‚Å‚«‚éó‘Ô‚Å‚ ‚é‚È‚ç‚Î”ò‚Ô
         if(IsJumpInputPressed() && CanJump())
         {
             ApplyJump();
         }
 
-        // d—Í‚Ì“K‰
+        // é‡åŠ›ã®é©ç”¨
         if (!isGround)
         {
             playerContex.velocity.y -= playerContex.playerData.gravity * Time.deltaTime;
@@ -61,5 +60,4 @@ public class PlayerJump : MonoBehaviour
         jumpCounter++;
         playerContex.master.CurrentState = PlayerState.Jump;
     }
-
 }

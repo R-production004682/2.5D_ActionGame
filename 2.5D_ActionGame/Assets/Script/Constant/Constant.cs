@@ -6,7 +6,7 @@ namespace Const
 {
     public static class InputHandlerInfo
     {
-        // “ь—Н‚і‚к‚Д‚ў‚й‚©‚М”»’f‚р‚·‚йЌЕЏ¬‚Ми‡’l
+        // е…ҐеЉ›гЃ•г‚ЊгЃ¦гЃ„г‚‹гЃ‹гЃ®е€¤ж–­г‚’гЃ™г‚‹жњЂе°ЏгЃ®й–ѕеЂ¤
         public const float DEADZONE_THRESHOLD = 0.01f;
     }
 }
