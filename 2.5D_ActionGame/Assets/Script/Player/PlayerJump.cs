@@ -53,7 +53,7 @@ public class PlayerJump : MonoBehaviour
         => Input.GetKeyDown(KeyCode.Space);
 
     private bool CanJump() 
-        => jumpCounter < playerContex.playerData?.jumpCount;
+        => jumpCounter < playerContex.playerData.jumpCount;
 
     private void ApplyJump()
     {

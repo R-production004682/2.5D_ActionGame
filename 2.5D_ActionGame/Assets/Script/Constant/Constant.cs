@@ -7,6 +7,6 @@ namespace Const
     public static class InputHandlerInfo
     {
         // “ü—Í‚³‚ê‚Ä‚¢‚é‚©‚Ì”»’f‚ğ‚·‚éÅ¬‚Ìè‡’l
-        public const float DEADZONE_THRESHOID = 0.01f;
+        public const float DEADZONE_THRESHOLD = 0.01f;
     }
 }

@@ -28,7 +28,7 @@ public class PlayerMove : MonoBehaviour
         if(playerContex.master.CurrentState != PlayerState.Air && playerContex.master.CurrentState != PlayerState.Jump)
         {
             // “ü—Í‚ª0‚É‹ß‚µ‚¯‚ê‚ÎIdle‚Ö•Ï‰»‚³‚¹‚é
-            if (Mathf.Abs(horizontal) < InputHandlerInfo.DEADZONE_THRESHOID)
+            if (Mathf.Abs(horizontal) < InputHandlerInfo.DEADZONE_THRESHOLD)
             {
                 playerContex.master.CurrentState = PlayerState.Idle;
             }
