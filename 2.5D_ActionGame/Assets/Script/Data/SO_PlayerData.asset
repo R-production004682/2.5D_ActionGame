@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SO_PlayerData
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  airSpeed: 4
+  airSpeed: 3
   jumpPower: 4.9
+  jumpCount: 2
   gravity: 10

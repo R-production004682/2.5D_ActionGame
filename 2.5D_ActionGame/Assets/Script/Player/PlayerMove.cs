@@ -1,9 +1,9 @@
 using UnityEngine;
+using Const;
 
 public class PlayerMove : MonoBehaviour
 {
     private PlayerContex playerContex;
-    private float inputDeadzoneThreshold = 0.01f;
 
     public void Initialized(PlayerContex contex)
     {
@@ -28,7 +28,7 @@ public class PlayerMove : MonoBehaviour
         if(playerContex.master.CurrentState != PlayerState.Air && playerContex.master.CurrentState != PlayerState.Jump)
         {
             // “ü—Í‚ª0‚É‹ß‚µ‚¯‚ê‚ÎIdle‚Ö•Ï‰»‚³‚¹‚é
-            if (Mathf.Abs(horizontal) < inputDeadzoneThreshold)
+            if (Mathf.Abs(horizontal) < InputHandlerInfo.DEADZONE_THRESHOID)
             {
                 playerContex.master.CurrentState = PlayerState.Idle;
             }

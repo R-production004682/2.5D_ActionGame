@@ -7,6 +7,7 @@ public class PlayerData : ScriptableObject
     [SerializeField] public float moveSpeed;
     [SerializeField] public float airSpeed;
     [SerializeField] public float jumpPower;
+    [SerializeField] public int jumpCount;
 
     [Header("èdóÕ")]
     public float gravity = 9.8f;
