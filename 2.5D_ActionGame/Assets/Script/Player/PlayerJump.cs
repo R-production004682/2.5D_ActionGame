@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerJump : MonoBehaviour
 {
     private PlayerContex playerContex;
+    private int jumpCounter;
+    private bool wasGroundedLastFrame;
 
     public void Initialized(PlayerContex contex)
     {
@@ -10,24 +12,52 @@ public class PlayerJump : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒWƒƒƒ“ƒvƒƒWƒbƒN
+    /// ã‚¸ãƒ£ãƒ³ãƒ—ã®ãƒ­ã‚¸ãƒƒã‚¯
     /// </summary>
     public void HandlerJump()
     {
-        // Ú’n‚µ‚Ä‚¢‚é‚È‚ç‚ÎƒWƒƒƒ“ƒv‰Â”\
-        if (playerContex.characterController.isGrounded == true)
+        var isGround = playerContex.characterController.isGrounded;
+
+        // ç€åœ°ã—ãŸç¬é–“ã ã‘ jumpCounter ã‚’ãƒªã‚»ãƒƒãƒˆ
+        if (isGround && !wasGroundedLastFrame)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            jumpCounter = 0;
+        }
+
+        if(IsJumpInputPressed() && CanJump())
+        {
+            ApplyJump();
+        }
+
+        // é‡åŠ›ã®é©ç”¨
+        if (!isGround)
+        {
+            playerContex.velocity.y -= playerContex.playerData.gravity * Time.deltaTime;
+
+            if (0.0f < playerContex.velocity.y)
             {
-                playerContex.master.CurrentState = PlayerState.Jump;
-                playerContex.velocity.y = playerContex.playerData.jumpPower;
+                playerContex.master.CurrentState = PlayerState.Air;
             }
         }
-        else
+        else if(0.0f > playerContex.velocity.y)
         {
-            // ‹ó’†‚É‚¢‚éŠÔ‚Íd—Í“K—p
-            playerContex.velocity.y -= playerContex.playerData.gravity * Time.deltaTime;
-            playerContex.master.CurrentState = PlayerState.Air;
+            playerContex.velocity.y = 0.0f;
+            playerContex.master.CurrentState = PlayerState.Idle;
         }
+
+        wasGroundedLastFrame = isGround;
+    }
+
+    private bool IsJumpInputPressed() 
+        => Input.GetKeyDown(KeyCode.Space);
+
+    private bool CanJump() 
+        => jumpCounter < playerContex.playerData.jumpCount;
+
+    private void ApplyJump()
+    {
+        playerContex.velocity.y = playerContex.playerData.jumpPower;
+        jumpCounter++;
+        playerContex.master.CurrentState = PlayerState.Jump;
     }
 }
