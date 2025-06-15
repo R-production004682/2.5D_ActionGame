@@ -20,8 +20,8 @@ public abstract class Item : MonoBehaviour
             if(player != null)
             {
                 ApplyEffect();
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
         }
     }
 }

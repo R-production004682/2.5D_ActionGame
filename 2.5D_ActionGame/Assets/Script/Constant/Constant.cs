@@ -12,7 +12,7 @@ namespace Const
     public static class CoinInfo
     {
         // コインのタグ
-        public const string COIN_TAG_NORMA = "Normal";
+        public const string COIN_TAG_NORMAL = "Normal";
         public const string COIN_TAG_SILVER = "Silver";
         public const string COIN_TAG_GOLD = "Gold";
         
