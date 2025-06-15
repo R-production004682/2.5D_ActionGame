@@ -11,12 +11,12 @@ public enum PlayerState
 
 public class PlayerMaster : MonoBehaviour
 {
-    [Header("Player‚Ì\¬—v‘f")]
+    [Header("Playerã®æ§‹æˆè¦ç´ ")]
     [SerializeField] protected PlayerData playerData;
     [SerializeField] public PlayerMove move;
     [SerializeField] public PlayerJump jump;
 
-    [Header("ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Header("ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
     [SerializeField] private CharacterController characterController;
 
     private PlayerContex playerContex;
@@ -36,7 +36,6 @@ public class PlayerMaster : MonoBehaviour
             }
         }
     }
-
 
     private void Awake()
     {
@@ -63,5 +62,4 @@ public class PlayerMaster : MonoBehaviour
         move.HandleMove();
         jump.HandlerJump();
     }
-
 }

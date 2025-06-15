@@ -227,6 +227,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1859122619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &67055520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67055522}
+  - component: {fileID: 67055521}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &67055521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67055520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8c3a5a81338c074296554a21da44844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &67055522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67055520}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &379356686
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,9 +784,10 @@ GameObject:
   - component: {fileID: 957092266}
   - component: {fileID: 957092265}
   - component: {fileID: 957092264}
+  - component: {fileID: 957092268}
   m_Layer: 0
-  m_Name: Item
-  m_TagString: Untagged
+  m_Name: Coin_Normal
+  m_TagString: Normal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -762,7 +807,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -833,6 +878,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &957092268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957092263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847d370c66bae9b4aac6891331d3b359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemData: {fileID: 0}
 --- !u!1 &1292937576
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +909,7 @@ GameObject:
   - component: {fileID: 1292937582}
   m_Layer: 0
   m_Name: TestPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -982,11 +1041,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f57133ca54644644b5ce56619127b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: af3e751f9badc0f45af69cc73ce5ae04, type: 2}
+  playerData: {fileID: 11400000, guid: a1c9317e01636ec44af79ec20ce4cd1a, type: 2}
   move: {fileID: 1292937583}
   jump: {fileID: 1292937582}
   characterController: {fileID: 1292937581}
-  currentState: 0
 --- !u!1 &1454911203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,9 +1232,10 @@ GameObject:
   - component: {fileID: 1898567233}
   - component: {fileID: 1898567232}
   - component: {fileID: 1898567231}
+  - component: {fileID: 1898567235}
   m_Layer: 0
-  m_Name: Item (1)
-  m_TagString: Untagged
+  m_Name: Coin_Silver
+  m_TagString: Silver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1196,7 +1255,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1267,6 +1326,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1898567235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898567230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847d370c66bae9b4aac6891331d3b359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 0
+  itemData: {fileID: 0}
 --- !u!1 &2059782718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,3 +1454,4 @@ SceneRoots:
   - {fileID: 1730988303}
   - {fileID: 957092267}
   - {fileID: 1898567234}
+  - {fileID: 67055522}
