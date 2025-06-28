@@ -17,18 +17,27 @@ namespace Const
         public const int COIN_VALUE_GOLD = 10;
     }
 
-
     /// <summary>
     /// タグを管理
     /// </summary>
     public static class TagInfo
     {
         // Playerのタグ
-        public const string PLAYER_TAG = "Player";
+        public const string PLAYER = "Player";
 
         // コインのタグ
-        public const string COIN_TAG_NORMAL = "Normal";
-        public const string COIN_TAG_SILVER = "Silver";
-        public const string COIN_TAG_GOLD = "Gold";
+        public const string COIN_NORMAL = "Normal";
+        public const string COIN_SILVER = "Silver";
+        public const string COIN_GOLD = "Gold";
+
+        // Gimmick
+        public const string MOVE_PLATFORM = "MovePlatform";
     }
+
+    public static class GimmickInfo
+    {
+        // 動く床の目的地へ到達したかどうかを判断する閾値
+        public const float MOVE_FLOOR_REACH_THRESHOLD = 0.01f;
+    }
+        
 }

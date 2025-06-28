@@ -1,3 +1,4 @@
+using Const;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,26 +12,42 @@ public class MovePlatform : MonoBehaviour
     private bool isReturning = false;
     private bool isStopped = false;
 
-    private const float reachThreshold = 0.01f;
+    public Vector2 CurrentVelocity {get; private set; } = Vector2.zero;
 
-    private void Update()
+    private void Awake()
+    {
+        if(startPoint == null || endPoint == null)
+        {
+            Debug.LogError($"移動床{this.gameObject}の開始地点または、終了地点が設定されていません。");
+        }
+    }
+
+
+    private void FixedUpdate()
     {
         if(isStopped)
         {
+            CurrentVelocity = Vector2.zero;
             return;
         }
+        
+        var oldPosition = transform.position;
 
         MovePlatformStep();
         CheckArraivalAndToggleDirection();
+
+        CurrentVelocity = (transform.position - oldPosition) / Time.fixedDeltaTime;
     }
+
+    // 現在のターゲット地点を返す
+    private Vector3 CurrentTargetPosition => isReturning ? startPoint.position : endPoint.position;
 
     /// <summary>
     /// 床を動かす
     /// </summary>
     private void MovePlatformStep()
     {
-        var targetPoint = isReturning ? startPoint.position : endPoint.position;
-        transform.position = Vector3.MoveTowards(transform.position, targetPoint, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPosition, moveSpeed * Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -38,9 +55,7 @@ public class MovePlatform : MonoBehaviour
     /// </summary>
     private void CheckArraivalAndToggleDirection()
     {
-        var targetPoint = isReturning ? startPoint.position : endPoint.position;
-
-        if(Vector3.Distance(transform.position, targetPoint) < reachThreshold)
+        if(Vector3.Distance(transform.position, CurrentTargetPosition) < GimmickInfo.MOVE_FLOOR_REACH_THRESHOLD)
         {
             isReturning = !isReturning;
             StartCoroutine(PlatformPauseCoroutine());
@@ -63,7 +78,7 @@ public class MovePlatform : MonoBehaviour
     {
         Gizmos.color = Color.green;
 
-        if(startPoint != null)
+        if (startPoint != null)
         {
             Gizmos.DrawSphere(startPoint.position, 0.5f);
         } 
@@ -72,6 +87,10 @@ public class MovePlatform : MonoBehaviour
         {
             Gizmos.DrawSphere(endPoint.position, 0.5f);
         }
-    }
 
+        if (startPoint != null && endPoint != null)
+        {
+            Gizmos.DrawLine(startPoint.position, endPoint.position);
+        }
+    }
 }

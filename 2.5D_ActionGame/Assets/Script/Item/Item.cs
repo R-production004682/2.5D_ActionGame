@@ -19,7 +19,7 @@ public abstract class Item : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(TagInfo.PLAYER_TAG))
+        if(other.CompareTag(TagInfo.PLAYER))
         {
             PlayerMaster player = other.GetComponent<PlayerMaster>();
             if(player != null)

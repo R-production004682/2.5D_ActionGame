@@ -1,3 +1,4 @@
+using Const;
 using UnityEngine;
 
 public enum PlayerState
@@ -16,10 +17,9 @@ public class PlayerMaster : MonoBehaviour
     [SerializeField] public PlayerMove move;
     [SerializeField] public PlayerJump jump;
 
-    [Header("コンポーネント")]
-    [SerializeField] private CharacterController characterController;
-
+    private CharacterController characterController;
     private PlayerContex playerContex;
+    private Vector2 platformVelocity = Vector2.zero;
 
     private PlayerState currentState;
     public PlayerState CurrentState
@@ -29,9 +29,6 @@ public class PlayerMaster : MonoBehaviour
         {
             if(currentState != value)
             {
-#if UNITY_EDITOR || DEBUG
-                Debug.Log($"[State] {currentState} => {value}");
-#endif
                 currentState = value;
             }
         }
@@ -39,6 +36,8 @@ public class PlayerMaster : MonoBehaviour
 
     private void Awake()
     {
+        characterController = GetComponent<CharacterController>();
+
         playerContex = new PlayerContex
         {
            playerData = this.playerData,
@@ -53,8 +52,17 @@ public class PlayerMaster : MonoBehaviour
     private void Update()
     {
         HandlerState();
+    }
 
-        playerContex.characterController.Move(playerContex.velocity * Time.deltaTime);
+    private void FixedUpdate()
+    {
+        if(characterController.isGrounded == false)
+        {
+            platformVelocity = Vector2.zero;
+        }
+
+        var totalVelocity = playerContex.velocity + platformVelocity;
+        characterController.Move(totalVelocity * Time.fixedDeltaTime);
     }
 
     private void HandlerState()
@@ -62,4 +70,20 @@ public class PlayerMaster : MonoBehaviour
         move.HandleMove();
         jump.HandlerJump();
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.CompareTag(TagInfo.MOVE_PLATFORM))
+        {
+            var platform = hit.collider.GetComponent<MovePlatform>();
+            if(platform != null)
+            {
+                platformVelocity = platform.CurrentVelocity;
+                return;
+            }
+        }
+        platformVelocity = Vector2.zero;
+    }
+
+
 }
