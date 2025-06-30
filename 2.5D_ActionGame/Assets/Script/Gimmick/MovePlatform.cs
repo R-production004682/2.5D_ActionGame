@@ -27,7 +27,7 @@ public class MovePlatform : MonoBehaviour
     {
         if (isStopped)
         {
-            CurrentVelocity = Vector2.zero;
+            CurrentVelocity = Vector3.zero;
             return;
         }
 

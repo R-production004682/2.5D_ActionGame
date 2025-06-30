@@ -19,7 +19,7 @@ public class PlayerMaster : MonoBehaviour
 
     private CharacterController characterController;
     private PlayerContex playerContex;
-    private Vector3 platformVelocity = Vector2.zero;
+    private Vector3 platformVelocity = Vector3.zero;
 
     private PlayerState currentState;
     public PlayerState CurrentState
@@ -82,6 +82,6 @@ public class PlayerMaster : MonoBehaviour
                 return;
             }
         }
-        platformVelocity = Vector2.zero;
+        platformVelocity = Vector3.zero;
     }
 }
