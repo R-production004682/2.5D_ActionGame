@@ -39,6 +39,7 @@ namespace Const
         // 動く床の目的地へ到達したかどうかを判断する閾値
         public const float MOVE_FLOOR_REACH_THRESHOLD = 0.01f;
 
+        // Playerを動く床と同期させるための速度調整係数
         public const float VELOCITY_SCALE_FACTOR = 1.75f;
     }
         
