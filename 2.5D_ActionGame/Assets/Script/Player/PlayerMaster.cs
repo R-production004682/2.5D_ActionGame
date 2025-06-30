@@ -19,7 +19,7 @@ public class PlayerMaster : MonoBehaviour
 
     private CharacterController characterController;
     private PlayerContex playerContex;
-    private Vector2 platformVelocity = Vector2.zero;
+    private Vector3 platformVelocity = Vector3.zero;
 
     private PlayerState currentState;
     public PlayerState CurrentState
@@ -56,9 +56,9 @@ public class PlayerMaster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(characterController.isGrounded == false)
+        if(!characterController.isGrounded)
         {
-            platformVelocity = Vector2.zero;
+            platformVelocity = Vector3.zero;
         }
 
         var totalVelocity = playerContex.velocity + platformVelocity;
@@ -82,8 +82,6 @@ public class PlayerMaster : MonoBehaviour
                 return;
             }
         }
-        platformVelocity = Vector2.zero;
+        platformVelocity = Vector3.zero;
     }
-
-
 }

@@ -11,8 +11,9 @@ public class MovePlatform : MonoBehaviour
 
     private bool isReturning = false;
     private bool isStopped = false;
+    private Coroutine pauseCoroutine;
 
-    public Vector2 CurrentVelocity {get; private set; } = Vector2.zero;
+    public Vector3 CurrentVelocity {get; private set; } = Vector3.zero;
 
     private void Awake()
     {
@@ -22,21 +23,20 @@ public class MovePlatform : MonoBehaviour
         }
     }
 
-
     private void FixedUpdate()
     {
-        if(isStopped)
+        if (isStopped)
         {
-            CurrentVelocity = Vector2.zero;
+            CurrentVelocity = Vector3.zero;
             return;
         }
-        
-        var oldPosition = transform.position;
+
+        var prevPos = transform.position;
 
         MovePlatformStep();
-        CheckArraivalAndToggleDirection();
+        TryToggleDirection();
 
-        CurrentVelocity = (transform.position - oldPosition) / Time.fixedDeltaTime;
+        CurrentVelocity = (transform.position - prevPos) / Time.fixedDeltaTime * GimmickInfo.VELOCITY_SCALE_FACTOR;
     }
 
     // 現在のターゲット地点を返す
@@ -53,24 +53,26 @@ public class MovePlatform : MonoBehaviour
     /// <summary>
     /// 目的地までの到着を確認し、方向転換させる
     /// </summary>
-    private void CheckArraivalAndToggleDirection()
+    private void TryToggleDirection()
     {
-        if(Vector3.Distance(transform.position, CurrentTargetPosition) < GimmickInfo.MOVE_FLOOR_REACH_THRESHOLD)
+        if (Vector3.Distance(transform.position, CurrentTargetPosition) <
+                GimmickInfo.MOVE_FLOOR_REACH_THRESHOLD && pauseCoroutine == null)
         {
             isReturning = !isReturning;
-            StartCoroutine(PlatformPauseCoroutine());
+            pauseCoroutine = StartCoroutine(PauseBeforeReverse());
         }
     }
-    
+
     /// <summary>
     /// 目的地到着後数秒待つ
     /// </summary>
     /// <returns></returns>
-    private IEnumerator PlatformPauseCoroutine() 
+    private IEnumerator PauseBeforeReverse()
     {
         isStopped = true;
         yield return new WaitForSeconds(waitTime);
         isStopped = false;
+        pauseCoroutine = null;
     }
 
 

@@ -6,5 +6,5 @@ public class PlayerContex
     public CharacterController characterController;
     public PlayerMaster master;
 
-    public Vector2 velocity;
+    public Vector3 velocity;
 }
