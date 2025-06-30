@@ -36,7 +36,6 @@ public class MovePlatform : MonoBehaviour
         MovePlatformStep();
         TryToggleDirection();
 
-        // ここのマジックナンバーどうにかしたい。。。
         CurrentVelocity = (transform.position - prevPos) / Time.fixedDeltaTime * GimmickInfo.VELOCITY_SCALE_FACTOR;
     }
 
