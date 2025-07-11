@@ -3,13 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    [Header("Player詳細")]
-    [SerializeField] public float moveSpeed;
-    [SerializeField] public float airSpeed;
-    [SerializeField] public float jumpPower;
-    [SerializeField] public int jumpCount;
-    [SerializeField] public int lives;
+    [field : Header("Player詳細")]
+    [field: SerializeField] public float moveSpeed { get; private set; }
+    [field: SerializeField] public float airSpeed { get; private set; }
+    [field: SerializeField] public float jumpPower { get; private set; }
+    [field: SerializeField] public int jumpCount { get; private set; }
+    [field: SerializeField] public int lives { get; private set; }
 
-    [Header("重力")]
-    public float gravity = 9.8f;
+    [field: Header("重力")]
+    [field: SerializeField] public float gravity { get; private set; }
 }

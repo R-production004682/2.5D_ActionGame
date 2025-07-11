@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
-    [SerializeField] public GameObject playerRespawnPoint;
+    [field: SerializeField] public GameObject playerRespawnPoint { get; private set; }
 
     private int currentCoinCount;
 
@@ -24,9 +24,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if(uiManager == null)
+        if (uiManager == null)
         {
             Debug.LogError($"GameManager.cs, UIManager : {uiManager}");
+        }
+
+        if (playerRespawnPoint == null)
+        {
+            Debug.LogError("playerRespawnPointがGameManagerに設定されていません。");
         }
     }
 
