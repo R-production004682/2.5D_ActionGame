@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-   [SerializeField] private TextMeshProUGUI textMesh;
-   public void UpdateCoinDisplay(int coins)
-   {
-        textMesh.text = $"Coins : {coins.ToString()}";
-   }
+    [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI livesText;
+    public void UpdateCoinDisplay(int coins)
+    {
+         coinText.text = $"Coins : {coins.ToString()}";
+    }
+
+    public void UpdateLivesDisplay(int lives)
+    {
+        livesText.text = $"Lives : {lives.ToString()}";
+    }
 }

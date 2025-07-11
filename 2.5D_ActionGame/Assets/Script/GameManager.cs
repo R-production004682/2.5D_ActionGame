@@ -5,10 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
-
-    public static GameManager Instance { get; private set;}
+    [SerializeField] public GameObject playerRespawnPoint;
 
     private int currentCoinCount;
+
+    public static GameManager Instance { get; private set;}
 
     private void Awake()
     {
@@ -21,11 +22,19 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    private void Start()
+    {
+        if(uiManager == null)
+        {
+            Debug.LogError($"GameManager.cs, UIManager : {uiManager}");
+        }
+    }
+
     public void AddCoin(int amount)
     {
         currentCoinCount += amount;
         
         // TODO : UIの表示更新や、サウンドを鳴らす処理は下記に記載する。
-        uiManager.UpdateCoinDisplay(currentCoinCount);
+        uiManager?.UpdateCoinDisplay(currentCoinCount);
     }
 }

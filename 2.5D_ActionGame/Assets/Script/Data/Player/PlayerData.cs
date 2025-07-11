@@ -3,12 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    [Header("PlayerÚ×")]
+    [Header("Playerè©³ç´°")]
     [SerializeField] public float moveSpeed;
     [SerializeField] public float airSpeed;
     [SerializeField] public float jumpPower;
     [SerializeField] public int jumpCount;
+    [SerializeField] public int lives;
 
-    [Header("d—Í")]
+    [Header("é‡åŠ›")]
     public float gravity = 9.8f;
 }
