@@ -14,11 +14,14 @@ public class PlayerMaster : MonoBehaviour
 {
     [Header("Playerの構成要素")]
     [SerializeField] protected PlayerData playerData;
-    [SerializeField] public PlayerMove move;
-    [SerializeField] public PlayerJump jump;
+
+    private PlayerContex playerContex;
+    private PlayerMove move;
+    private PlayerJump jump;
+    private PlayerLives lives;
 
     private CharacterController characterController;
-    private PlayerContex playerContex;
+    
     private Vector3 platformVelocity = Vector3.zero;
 
     private PlayerState currentState;
@@ -45,8 +48,13 @@ public class PlayerMaster : MonoBehaviour
            master = this
         };
 
-        move.Initialized(playerContex);
-        jump.Initialized(playerContex);
+        move = GetComponent<PlayerMove>();
+        jump = GetComponent<PlayerJump>();
+        lives = GetComponent<PlayerLives>();
+
+        move?.Initialized(playerContex);
+        jump?.Initialized(playerContex);
+        lives?.Initialized(playerContex);
     }
 
     private void Update()
