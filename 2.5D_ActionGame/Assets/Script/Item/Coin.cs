@@ -10,7 +10,7 @@ public class Coin : Item
             TagInfo.COIN_NORMAL => CoinInfo.COIN_VALUE_NORMAL,
             TagInfo.COIN_SILVER => CoinInfo.COIN_VALUE_SILVER,
             TagInfo.COIN_GOLD   => CoinInfo.COIN_VALUE_GOLD,
-            _ => 0 // 設定が特にないバグコインの場合は０とする。
+            _ => 0
         };
 
         if(value == 0)

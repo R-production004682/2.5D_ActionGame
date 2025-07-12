@@ -14,7 +14,7 @@ public class DeadZone : DamageManager
         var gameManager = GameManager.Instance;
         var characterController = player.GetComponent<CharacterController>();
 
-        if (characterController != null)
+        if (characterController != null && gameManager.playerRespawnPoint != null)
         {
             // 一時的にCharacterControllerを無効化して、Playerの位置をリセットし、リスポーンさせる
             characterController.enabled = false;
