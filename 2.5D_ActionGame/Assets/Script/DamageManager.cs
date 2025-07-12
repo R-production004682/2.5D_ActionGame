@@ -36,16 +36,23 @@ public abstract class DamageManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var amount = GetDamageAmount(GetDamageType());
-            var currentLives = playerData.lives - amount;
-
             PlayerMaster player = other.GetComponent<PlayerMaster>();
-            ApplyDamageEffect(player);
-
-            if (0 < currentLives)
+            if(player == null) 
             {
-                uiManager?.UpdateLivesDisplay(currentLives);
+                Debug.LogError($"[{other.tag}]を持ったオブジェクトに、PlayerMasterがアタッチされていません。 name : [{other.name}]");
+                return;
             }
+
+            var playerLives = player.GetComponent<PlayerLives>();
+            if (playerLives == null)
+            {
+                Debug.LogError($"[{other.tag}]を持ったオブジェクトに、PlayerLivesがアタッチされていません。 name : [{other.name}]");
+            }
+
+            var amount = GetDamageAmount(GetDamageType());
+            playerLives.TakeDamage(amount);
+
+            ApplyDamageEffect(player);
         }
     }
 

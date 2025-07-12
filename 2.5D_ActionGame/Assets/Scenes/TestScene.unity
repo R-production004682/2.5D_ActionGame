@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1497121431}
-  playerRespawnPoint: {fileID: 2082357779}
+  <playerRespawnPoint>k__BackingField: {fileID: 2082357779}
 --- !u!4 &67055522
 Transform:
   m_ObjectHideFlags: 0

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec1c2d46aea916647a82cb4da34b0d78, type: 3}
   m_Name: SO_DamageData
   m_EditorClassIdentifier: 
-  deadZoneAmount: 1
-  normalAmount: 0
-  magicAmount: 0
-  trapAmount: 0
-  criticalDamageRate: 0
-  magicCriticalDamageRate: 0
+  <deadZoneAmount>k__BackingField: 1
+  <normalAmount>k__BackingField: 1
+  <magicAmount>k__BackingField: 1
+  <trapAmount>k__BackingField: 1
+  <criticalDamageRate>k__BackingField: 0
+  <magicCriticalDamageRate>k__BackingField: 0
