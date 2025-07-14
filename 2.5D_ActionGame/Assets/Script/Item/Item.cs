@@ -21,7 +21,7 @@ public abstract class Item : MonoBehaviour
     {
         if(other.CompareTag(TagInfo.PLAYER))
         {
-            PlayerMaster player = other.GetComponent<PlayerMaster>();
+            PlayerController player = other.GetComponent<PlayerController>();
             if(player != null)
             {
                 ApplyEffect();

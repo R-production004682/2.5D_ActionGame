@@ -8,6 +8,7 @@ TagManager:
   - Silver
   - Gold
   - MovePlatform
+  - Plane
   layers:
   - Default
   - TransparentFX

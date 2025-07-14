@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DeadZone : DamageManager
@@ -9,17 +7,15 @@ public class DeadZone : DamageManager
         return DamageType.DeadZone;
     }
 
-    protected override void ApplyDamageEffect(PlayerMaster player)
+    protected override void ApplyDamageEffect(PlayerController player)
     {
         var gameManager = GameManager.Instance;
-        var characterController = player.GetComponent<CharacterController>();
+        var rb = player.GetComponent<Rigidbody>();
 
-        if (characterController != null && gameManager.playerRespawnPoint != null)
+        if (rb != null && gameManager.playerRespawnPoint != null)
         {
-            // 一時的にCharacterControllerを無効化して、Playerの位置をリセットし、リスポーンさせる
-            characterController.enabled = false;
+            rb.velocity = Vector3.zero;
             player.transform.position = gameManager.playerRespawnPoint.transform.position;
-            characterController.enabled = true;
         }
     }
 }

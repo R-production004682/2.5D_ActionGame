@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class MovePlatform : MonoBehaviour
 {
     [SerializeField] private Transform startPoint, endPoint;
@@ -12,15 +13,26 @@ public class MovePlatform : MonoBehaviour
     private bool isReturning = false;
     private bool isStopped = false;
     private Coroutine pauseCoroutine;
+    private Vector3 lastVelocity = Vector3.zero;
 
     public Vector3 CurrentVelocity {get; private set; } = Vector3.zero;
 
+    private Rigidbody rb;
+
     private void Awake()
     {
-        if(startPoint == null || endPoint == null)
+        if (startPoint == null || endPoint == null)
         {
             Debug.LogError($"移動床{this.gameObject}の開始地点または、終了地点が設定されていません。");
         }
+
+        rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        rb.isKinematic = true;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     private void FixedUpdate()
@@ -31,12 +43,14 @@ public class MovePlatform : MonoBehaviour
             return;
         }
 
-        var prevPos = transform.position;
+        var prevPos = rb.position;
 
         MovePlatformStep();
         TryToggleDirection();
 
-        CurrentVelocity = (transform.position - prevPos) / Time.fixedDeltaTime * GimmickInfo.VELOCITY_SCALE_FACTOR;
+        var rawVelocity = (rb.position - prevPos) / Time.fixedDeltaTime * GimmickInfo.VELOCITY_SCALE_FACTOR;
+        CurrentVelocity = Vector3.Lerp(lastVelocity, rawVelocity, 0.2f);
+        lastVelocity = CurrentVelocity;
     }
 
     // 現在のターゲット地点を返す
@@ -47,7 +61,8 @@ public class MovePlatform : MonoBehaviour
     /// </summary>
     private void MovePlatformStep()
     {
-        transform.position = Vector3.MoveTowards(transform.position, CurrentTargetPosition, moveSpeed * Time.fixedDeltaTime);
+        Vector3 target = Vector3.MoveTowards(rb.position, CurrentTargetPosition, moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(target);
     }
 
     /// <summary>
