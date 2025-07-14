@@ -1,11 +1,5 @@
 namespace Const 
 {
-    public static class InputHandlerInfo
-    {
-        // 入力されているかの判断をする最小の閾値
-        public const float DEADZONE_THRESHOLD = 0.01f;
-    }
-
     /// <summary>
     /// コインの情報
     /// </summary>
@@ -32,6 +26,10 @@ namespace Const
 
         // Gimmick
         public const string MOVE_PLATFORM = "MovePlatform";
+
+        // Environment
+        public const string PLANE = "Plane";
+        public const string WALL = "Wall";
     }
 
     public static class GimmickInfo
@@ -42,5 +40,4 @@ namespace Const
         // Playerを動く床と同期させるための速度調整係数
         public const float VELOCITY_SCALE_FACTOR = 1.75f;
     }
-        
 }

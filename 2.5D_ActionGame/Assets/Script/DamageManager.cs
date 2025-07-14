@@ -23,7 +23,7 @@ public abstract class DamageManager : MonoBehaviour
     /// <summary>
     /// ダメージを受けたことによる効果を適用
     /// </summary>
-    protected abstract void ApplyDamageEffect(PlayerMaster player);
+    protected abstract void ApplyDamageEffect(PlayerController player);
 
     /// <summary>
     /// ダメージを受けた際のダメージタイプを取得
@@ -36,10 +36,10 @@ public abstract class DamageManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerMaster player = other.GetComponent<PlayerMaster>();
+            PlayerController player = other.GetComponent<PlayerController>();
             if(player == null) 
             {
-                Debug.LogError($"[{other.tag}]を持ったオブジェクトに、PlayerMasterがアタッチされていません。 name : [{other.name}]");
+                Debug.LogError($"[{other.tag}]を持ったオブジェクトに、PlayerControllerがアタッチされていません。 name : [{other.name}]");
                 return;
             }
 

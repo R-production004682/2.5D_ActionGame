@@ -6,13 +6,13 @@ public class PlayerLives : MonoBehaviour
 {
     [SerializeField] private UIManager uiManager;
 
-    private PlayerContex playerContex;
+    private PlayerContext playerContext;
     private int currentLives;
 
-    public void Initialized(PlayerContex contex)
+    public void Initialize(PlayerContext contex)
     {
-        playerContex = contex;
-        currentLives = playerContex.playerData.lives;
+        playerContext = contex;
+        currentLives = playerContext.playerData.lives;
     }
 
     private void Start()
@@ -21,7 +21,7 @@ public class PlayerLives : MonoBehaviour
         {
             Debug.LogError($"UIManagerが設定されていません : {uiManager}");
         }
-        uiManager?.UpdateLivesDisplay(playerContex.playerData.lives);
+        uiManager?.UpdateLivesDisplay(playerContext.playerData.lives);
     }
 
     /// <summary>
