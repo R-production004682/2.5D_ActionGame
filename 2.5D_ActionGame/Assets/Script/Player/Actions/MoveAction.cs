@@ -40,7 +40,6 @@ public class MoveAction : IPlayerAction
             {
                 // TODO : 壁や、地面に引っかかった際に、無理やり通ると反発して飛んで行ってしまうので、
                 // よじ登る動作を実装する必要がある。（現在は必要性が無いため不要）
-
                 Vector3 planeNormal = new Vector3(hit.normal.x, hit.normal.y, 0f).normalized;
                 velocity = Vector3.ProjectOnPlane(velocity, planeNormal);
             }
