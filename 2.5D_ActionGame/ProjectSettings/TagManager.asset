@@ -9,6 +9,7 @@ TagManager:
   - Gold
   - MovePlatform
   - Plane
+  - Elevator
   layers:
   - Default
   - TransparentFX
