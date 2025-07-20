@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 platformLastPos;
     private Vector3 platformVelocity;
 
-    private bool jumpRequested = false;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,14 +42,7 @@ public class PlayerController : MonoBehaviour
         jumpAction.Initialize(playerContext, playerInput);
     }
 
-    private void Update()
-    {
-        // Fixedupdate内では入力検知漏れがある為、バッファを作成する
-        if (playerInput.isJumpPressed())
-        {
-            jumpRequested = true;
-        }
-    }
+    private void Update() {}
 
     private void FixedUpdate()
     {
@@ -66,7 +57,9 @@ public class PlayerController : MonoBehaviour
     private void UpdateGroundCheck()
     {
         var origin = transform.position + Vector3.up * 0.1f;
-        if (Physics.SphereCast(origin, 0.2f, Vector3.down, out RaycastHit hit, playerData.groundCheckRaycastLength))
+
+        // Ray式の当たり判定ではなく、球面キャストを使用してより広い範囲での接地判定を行う
+        if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, playerData.groundCheckRaycastLength))
         {
             state.isGrounded = true;
 
@@ -99,10 +92,5 @@ public class PlayerController : MonoBehaviour
     /// ジャンプリクエストを消費する。
     /// </summary>
     /// <returns></returns>
-    public bool ConsumeJumpRequest()
-    {
-        if (!jumpRequested) return false;
-        jumpRequested = false;
-        return true;
-    }
+    public bool ConsumeJumpRequest() => InputBuffer.Instance.ConsumeJump();
 }

@@ -21,13 +21,15 @@ public class MoveAction : IPlayerAction
         var appliedSpeed = context.state.isGrounded ? defaultSpeed : airSpeed;
 
         var velocity = context.rigidbody.velocity;
-        velocity.x = horizontal * appliedSpeed;
 
         // 床速度を合成
         if(context.state.isGrounded)
         {
             velocity.x += context.playerController.GetPlatformVelocity().x;
         }
+
+        velocity.x = input.GetHorizontal() * appliedSpeed + context.playerController.GetPlatformVelocity().x;
+        context.rigidbody.velocity = velocity;
 
         // 壁との衝突面に対して滑らせる
         var direction = Vector3.right * Mathf.Sign(velocity.x);
@@ -42,10 +44,6 @@ public class MoveAction : IPlayerAction
                 // よじ登る動作を実装する必要がある。（現在は必要性が無いため不要）
                 Vector3 planeNormal = new Vector3(hit.normal.x, hit.normal.y, 0f).normalized;
                 velocity = Vector3.ProjectOnPlane(velocity, planeNormal);
-            }
-            else
-            {
-                return;
             }
         }
         context.rigidbody.velocity = velocity;

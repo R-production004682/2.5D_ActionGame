@@ -22,6 +22,6 @@ public class Coin : Item
             throw new InvalidCoinTagException($"[Bug] 取得したコインにタグの設定がされてません。objectName: {this.name}, objectTag: {tag}");
 #endif
         }
-        GameManager.Instance.AddCoin(value);
+        GameManager.Instance.AddCoins(value);
     }
 }

@@ -1,4 +1,5 @@
 using Const;
+using UnityEditor;
 using UnityEngine;
 
 public class MovePlatformLogic : MonoBehaviour, IGimmickLogic
@@ -66,11 +67,32 @@ public class MovePlatformLogic : MonoBehaviour, IGimmickLogic
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (startPoint == null || endPoint == null) return;
+
+        // 線の色
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(startPoint.position, endPoint.position);
+
+        // 開始・終了点のスフィア
         Gizmos.color = Color.green;
-        if (startPoint != null) Gizmos.DrawSphere(startPoint.position, 0.5f);
-        if (endPoint != null) Gizmos.DrawSphere(endPoint.position, 0.5f);
-        if (startPoint != null && endPoint != null) Gizmos.DrawLine(startPoint.position, endPoint.position);
+        Gizmos.DrawSphere(startPoint.position, 0.3f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(endPoint.position, 0.3f);
+
+        // ラベル表示
+        GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.white;
+        Handles.Label(startPoint.position + Vector3.up * 0.5f, "Start", style);
+        Handles.Label(endPoint.position + Vector3.up * 0.5f, "End", style);
+
+        // → 向きの矢印（中間点から方向を示す）
+        Vector3 dir = (endPoint.position - startPoint.position).normalized;
+        Vector3 mid = Vector3.Lerp(startPoint.position, endPoint.position, 0.5f);
+        Handles.color = Color.yellow;
+        Handles.ArrowHandleCap(0, mid, Quaternion.LookRotation(dir), 1.0f, EventType.Repaint);
     }
+#endif
 }

@@ -35,11 +35,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddCoin(int amount)
+    public void AddCoins(int amount)
     {
         currentCoinCount += amount;
-        
-        // TODO : UIの表示更新や、サウンドを鳴らす処理は下記に記載する。
+        UpdateCoins(currentCoinCount);
+    }
+
+    public void SubCoins(int amount)
+    {
+        var afterCoinNum = currentCoinCount - amount;
+        if (afterCoinNum < 0)
+        {
+            Debug.Log($"コインが足りないので、差し引けません。" +
+                $"currentCoinCount : {currentCoinCount}, afterCoinNum : {afterCoinNum}");
+
+            UpdateCoins(currentCoinCount);
+        }
+        else
+        {
+            Debug.Log($"コインが足りました。 currentCoinCount : {afterCoinNum}");
+            UpdateCoins(afterCoinNum);
+        }
+    }
+
+    public void UpdateCoins(int amount)
+    {
+        currentCoinCount = amount;
         uiManager?.UpdateCoinDisplay(currentCoinCount);
+    }
+
+    public int GetCoinCount()
+    {
+        return currentCoinCount;
     }
 }

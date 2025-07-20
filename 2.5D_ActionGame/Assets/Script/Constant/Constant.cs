@@ -39,5 +39,8 @@ namespace Const
 
         // Playerを動く床と同期させるための速度調整係数
         public const float VELOCITY_SCALE_FACTOR = 1.75f;
+
+        // Gimmickを動かすためのコインの必要枚数
+        public const int REQUIRED_COIN_NUM = 10;
     }
 }
