@@ -47,6 +47,11 @@ public class GimmickController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        gimmickEffect.ApplyEffect(other);
+        gimmickEffect.ApplyEnterEffect(other);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        gimmickEffect.ApplyStayEffect(other);
     }
 }

@@ -12,7 +12,7 @@ public class DeadZoneDamageEffect : MonoBehaviour, IGimmickEffect
         this.context = context;
     }
 
-    public void ApplyEffect(Collider other)
+    public void ApplyEnterEffect(Collider other)
     {
         if(!other.CompareTag(TagInfo.PLAYER))
         {
@@ -36,5 +36,11 @@ public class DeadZoneDamageEffect : MonoBehaviour, IGimmickEffect
             rb.velocity = Vector3.zero;
             player.transform.position = gameManager.playerRespawnPoint.transform.position;
         }
+    }
+
+    public void ApplyStayEffect(Collider other)
+    {
+        // 何もしない
+        return;
     }
 }
