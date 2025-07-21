@@ -27,10 +27,8 @@ public class ElevatorPanelEffect : MonoBehaviour, IGimmickEffect
         var gameManagerInstance = GameManager.Instance;
         var currentCoinNum = gameManagerInstance.GetCoinCount();
 
-        if (InputBuffer.Instance.ConsumeElevator() && GimmickInfo.REQUIRED_COIN_NUM <= currentCoinNum)
+        if (InputBuffer.Instance.ConsumeElevator())
         {
-            gameManagerInstance.SubCoins(GimmickInfo.REQUIRED_COIN_NUM);
-
             var thisPoint = GetComponentInChildren<ElevatorPoint>();
             if (thisPoint == null)
             {
