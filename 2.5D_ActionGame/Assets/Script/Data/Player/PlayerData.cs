@@ -15,4 +15,6 @@ public class PlayerData : ScriptableObject
     [field: Header("物理計算パラメータ")]
     [field: SerializeField, Range(0, 1)] public float groundCheckRaycastLength { get; private set; }
     [field: SerializeField, Range(0, 1)] public float wallCheckRaycastLength { get; private set; }
+    [field: SerializeField, Range(0, 1)] public float wallJumpGravityScale { get; private set; }
+    [field: SerializeField] public bool wallJumpGravityScaleAvailable { get; private set; } = true;
 }

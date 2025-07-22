@@ -1,3 +1,5 @@
+using System;
+
 namespace Const 
 {
     /// <summary>
@@ -30,6 +32,8 @@ namespace Const
         // Environment
         public const string PLANE = "Plane";
         public const string WALL = "Wall";
+
+        public const string LAYER_GROUND = "Ground";
     }
 
     public static class GimmickInfo
@@ -42,5 +46,14 @@ namespace Const
 
         // Gimmickを動かすためのコインの必要枚数
         public const int REQUIRED_COIN_NUM = 10;
+    }
+
+    public static class PhysicsInfo
+    {
+        // 接地しているかどうかを判断するための閾値
+        public const float VERSATILE_THRESHOLD = 0.05f;
+
+        // Playerの接壁判定に使用するレイキャストの長さ
+        public const float WALL_CHECK_RAYCAST_LENGTH = 0.5f;
     }
 }
