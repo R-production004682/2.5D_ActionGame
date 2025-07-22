@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: SO_PlayerData
   m_EditorClassIdentifier: 
   <moveSpeed>k__BackingField: 7
-  <airSpeed>k__BackingField: 6.35
-  <jumpForce>k__BackingField: 5
+  <airSpeed>k__BackingField: 5
+  <jumpForce>k__BackingField: 4.7
   <jumpCount>k__BackingField: 2
   lives: 10
-  <groundCheckRaycastLength>k__BackingField: 0.8
-  <wallCheckRaycastLength>k__BackingField: 0.6
+  <groundCheckRaycastLength>k__BackingField: 0.6
+  <wallCheckRaycastLength>k__BackingField: 0.2
+  <wallJumpGravityScale>k__BackingField: 0
+  <wallJumpGravityScaleAvailable>k__BackingField: 1
