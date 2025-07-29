@@ -20,8 +20,10 @@ public class WallJumpAction : IPlayerAction
 
     public void Execute()
     {
+        // ジャンプボタンが押されたら、壁ジャンプのクールダウンをリセット
         wallJumpTimer -= Time.deltaTime;
 
+        // プレイヤーが地面に接地している場合は、壁ジャンプの状態をリセット
         if (playerContext.state.isGrounded)
         {
             playerContext.state.isStickingToWall = false;
@@ -29,6 +31,7 @@ public class WallJumpAction : IPlayerAction
             return;
         }
 
+        // 壁に張り付いている状態でジャンプボタンが押された場合、壁ジャンプを実行
         if (playerContext.state.isStickingToWall)
         {
             if (InputBuffer.Instance.PeekJump())
@@ -42,6 +45,8 @@ public class WallJumpAction : IPlayerAction
             return;
         }
 
+        // 壁に張り付いていない状態でジャンプボタンが押された場合、壁ジャンプのクールダウンをリセット
+        // ただし、壁に近い場合は壁に張り付く
         if (wallJumpTimer <= 0f && IsNearWall(out Vector3 wallNormal))
         {
             StickToWall(wallNormal);
@@ -56,6 +61,10 @@ public class WallJumpAction : IPlayerAction
         }
     }
 
+    /// <summary>
+    /// 壁に張り付く処理
+    /// </summary>
+    /// <param name="wallNormal"></param>
     private void StickToWall(Vector3 wallNormal)
     {
         playerContext.state.isStickingToWall = true;
@@ -67,6 +76,28 @@ public class WallJumpAction : IPlayerAction
         Debug.Log("張り付いたよ");
     }
 
+    /// <summary>
+    /// 近くに壁ジャンプ可能な壁があるかを判定
+    /// </summary>
+    /// <param name="normal"></param>
+    /// <returns></returns>
+    private bool IsNearWall(out Vector3 normal)
+    {
+        if(playerContext.CheckSurroundingObject(TagInfo.WALL, out var hit))
+        {
+            normal = hit.normal;
+            lastWallNormal = normal;
+            return true;
+        }
+
+        normal = Vector3.zero;
+        return false;
+    }
+
+    /// <summary>
+    /// 壁ジャンプ処理
+    /// </summary>
+    /// <param name="wallNormal"></param>
     private void PerformWallJump(Vector3 wallNormal)
     {
         playerContext.state.isStickingToWall = false;
@@ -74,6 +105,7 @@ public class WallJumpAction : IPlayerAction
 
         playerContext.state.jumpCounter = 0;
 
+        // 最後に張り付いていた壁の法線を使用してジャンプ方向を計算
         var jumpDirection = ((wallNormal * -1.0f) + (Vector3.up * 0.3f)).normalized;
 
         // 強制的に壁から引き剥がす
@@ -83,28 +115,4 @@ public class WallJumpAction : IPlayerAction
         Debug.DrawRay(playerContext.rigidbody.position, jumpDirection * 2f, Color.cyan, 1f);
     }
 
-    private bool IsNearWall(out Vector3 normal)
-    {
-        var wallCheckDistance = PhysicsInfo.WALL_CHECK_RAYCAST_LENGTH;
-        Vector3[] directions = { Vector3.left, Vector3.right };
-
-        foreach (var dir in directions)
-        {
-            var origin = playerContext.rigidbody.position;
-            var ray = dir * wallCheckDistance;
-
-            var hitResult = Physics.Raycast(origin, dir, out var hit, wallCheckDistance);
-            Debug.DrawRay(origin, ray, hitResult ? Color.green : Color.red, 1f);
-
-            if (hitResult && hit.collider.CompareTag(TagInfo.WALL))
-            {
-                normal = hit.normal;
-                lastWallNormal = hit.normal;
-                return true;
-            }
-        }
-
-        normal = Vector3.zero;
-        return false;
-    }
 }

@@ -3,12 +3,12 @@ using Const;
 
 public class MoveAction : IPlayerAction
 {
-    private PlayerContext context;
+    private PlayerContext playerContext;
     private IPlayerInput input;
 
     public void Initialize(PlayerContext context, IPlayerInput input)
     {
-        this.context = context;
+        this.playerContext = context;
         this.input = input;
     }
 
@@ -16,36 +16,41 @@ public class MoveAction : IPlayerAction
     {
         var horizontal = input.GetHorizontal();
 
-        var defaultSpeed = context.playerData.moveSpeed;
-        var airSpeed = context.playerData.airSpeed;
-        var appliedSpeed = context.state.isGrounded ? defaultSpeed : airSpeed;
+        var defaultSpeed = playerContext.playerData.moveSpeed;
+        var airSpeed = playerContext.playerData.airSpeed;
 
-        var velocity = context.rigidbody.velocity;
+        // 地上にいる場合は通常の移動速度を適用し、空中にいる場合は空中移動速度を適用する
+        var appliedSpeed = playerContext.state.isGrounded ? defaultSpeed : airSpeed;
 
-        // 床速度を合成
-        if(context.state.isGrounded)
+        // 掴んでいる場合は、掴んでいるオブジェクトの移動速度を適用する
+        if (playerContext.state.holdState == PlayerStateData.HoldState.Holding)
         {
-            velocity.x += context.playerController.GetPlatformVelocity().x;
+            appliedSpeed = playerContext.playerData.objectDragingSpeed;
         }
 
-        velocity.x = input.GetHorizontal() * appliedSpeed + context.playerController.GetPlatformVelocity().x;
-        context.rigidbody.velocity = velocity;
+        var velocity = playerContext.rigidbody.velocity;
+        // 床速度を合成
+        if(playerContext.state.isGrounded)
+        {
+            velocity.x += playerContext.playerController.GetPlatformVelocity().x;
+        }
+
+        velocity.x = (input.GetHorizontal() * appliedSpeed) + playerContext.playerController.GetPlatformVelocity().x;
+        playerContext.rigidbody.velocity = velocity;
 
         // 壁との衝突面に対して滑らせる
         var direction = Vector3.right * Mathf.Sign(velocity.x);
-        var maxDistance = context.playerData.wallCheckRaycastLength;
+        var maxDistance = playerContext.playerData.wallCheckRaycastLength;
 
-        if (Physics.Raycast(context.rigidbody.position, direction, out var hit, maxDistance))
+        if (Physics.Raycast(playerContext.rigidbody.position, direction, out var hit, maxDistance))
         {
             var hitObjectTag = hit.collider.gameObject.tag;
             if (hitObjectTag == TagInfo.WALL || hitObjectTag == TagInfo.PLANE)
             {
-                // TODO : 壁や、地面に引っかかった際に、無理やり通ると反発して飛んで行ってしまうので、
-                // よじ登る動作を実装する必要がある。（現在は必要性が無いため不要）
                 Vector3 planeNormal = new Vector3(hit.normal.x, hit.normal.y, 0f).normalized;
                 velocity = Vector3.ProjectOnPlane(velocity, planeNormal);
             }
         }
-        context.rigidbody.velocity = velocity;
+        playerContext.rigidbody.velocity = velocity;
     }
 }

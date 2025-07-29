@@ -14,19 +14,12 @@ public class JumpAction : IPlayerAction
 
     public void Execute()
     {
-        // 接地していてかつ、前フレームで接地していなかった場通す
-        if (playerContext.state.isGrounded && !wasGroundedLastFrame)
+        // 接地していてかつ、前フレームで接地していなかった場合はジャンプカウンターをリセット
+        // または、壁に張り付いている場合はジャンプカウンターをリセット
+        if (playerContext.state.isGrounded && !wasGroundedLastFrame || playerContext.state.isStickingToWall)
         {
             playerContext.state.jumpCounter = 0; 
         }
-
-        // 壁ジャンプをしている際はジャンカウンターをリセット
-        if (playerContext.state.isStickingToWall)
-        {
-            // 壁ジャンプの場合はカウンターをリセット
-            playerContext.state.jumpCounter = 0;
-        }
-
 
         // ジャンプの入力があり、ジャンプカウンターがプレイヤーデータのジャンプ回数より少ない場合通す
         if (playerContext.playerController.ConsumeJumpRequest() &&
@@ -38,7 +31,6 @@ public class JumpAction : IPlayerAction
 
                 playerContext.state.jumpCounter++;
         }
-
         // 前のフレームで地面に接地していたかどうかを記録
         wasGroundedLastFrame = playerContext.state.isGrounded;
     }

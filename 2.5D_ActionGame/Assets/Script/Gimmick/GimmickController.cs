@@ -22,7 +22,7 @@ public class GimmickController : MonoBehaviour
             gimmickData,
             rb,
             this
-         );
+        );
 
         gimmickLogic = GetComponent<IGimmickLogic>();
         if(gimmickLogic != null)

@@ -1,3 +1,4 @@
+using Const;
 using UnityEngine;
 
 public class PlayerContext
@@ -25,4 +26,33 @@ public class PlayerContext
         this.state = state;
         this.playerController = playerController;
     }
+
+    /// <summary>
+    /// プレイヤー周辺衝突判定処理
+    /// </summary>
+    /// <param name="tagToCheck">接触してほしいタグ名</param>
+    /// <param name="hitInfo">ヒットした情報を渡す</param>
+    /// <returns></returns>
+    public bool CheckSurroundingObject(string tagToCheck, out RaycastHit hitInfo)
+    {
+        var origin = rigidbody.position;
+        var checkDistance = PhysicsInfo.PLAYER_CONTACT_RAYCAST_LENGTH;
+        Vector3[] directions = { Vector3.left, Vector3.right};
+
+        foreach(var dir in directions)
+        {
+            var ray = dir * checkDistance;
+            var hit = Physics.Raycast(origin, dir, out hitInfo, checkDistance);
+            Debug.DrawRay(origin, ray, hit ? Color.red : Color.gray, 1f);
+
+            if (hit && hitInfo.collider.CompareTag(tagToCheck))
+            {
+                return true;
+            }
+        }
+
+        hitInfo = default;
+        return false;
+    }
+
 }

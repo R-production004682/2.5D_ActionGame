@@ -4,5 +4,4 @@
 public interface IPlayerInput
 {
     float GetHorizontal();
-    bool isJumpPressed();
 }

@@ -1,3 +1,4 @@
+using Const;
 using UnityEngine;
 
 public class InputBuffer : MonoBehaviour
@@ -6,8 +7,10 @@ public class InputBuffer : MonoBehaviour
 
     /* ─────────  バッファ保持用フラグ  ───────── */
     public bool JumpRequested { get; private set; }
-    public bool JumpRequestedThisFrame { get; private set; }
     public bool ElevatorUseRequested { get; private set; }
+    public bool HoldObjectRequested { get; private set; }
+    public bool ReleaseObjectRequested {get; private set; }
+
 
     private void Awake()
     {
@@ -21,10 +24,58 @@ public class InputBuffer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) JumpRequested = true;
 
         if (Input.GetKeyDown(KeyCode.W)) ElevatorUseRequested = true;
+
+        if (Input.GetMouseButtonDown(InputType.MOUSE_RIGHT))
+        {
+            HoldObjectRequested = true;
+        }
+
+        if(Input.GetMouseButtonUp(InputType.MOUSE_RIGHT))
+        {
+            ReleaseObjectRequested = true;
+        }
+
     }
 
-    public bool PeekJump() => JumpRequested || JumpRequestedThisFrame;
-    public bool ConsumeJump() { if (!JumpRequested) return false; JumpRequested = false; return true; }
+    public bool PeekJump() => JumpRequested;
+    public bool ConsumeJump() 
+    {
+        if (!JumpRequested) 
+        {
+            return false; 
+        }
+        JumpRequested = false; 
+        return true;
+    }
 
-    public bool ConsumeElevator() { if (!ElevatorUseRequested) return false; ElevatorUseRequested = false; return true; }
+    public bool ConsumeElevator() 
+    {
+        if (!ElevatorUseRequested) 
+        {
+            return false; 
+        }
+        ElevatorUseRequested = false;
+        return true; 
+    }
+
+    // もし、ホールドがFixedUpdateで拾えなかった場合はバッファを立てる
+    public bool ConsumeHoldObject()
+    {
+        if (!HoldObjectRequested)
+        {
+            return false;
+        }
+        HoldObjectRequested = false;
+        return true;
+    }
+
+    public bool ConsumeReleaseObject()
+    {
+        if (!ReleaseObjectRequested)
+        {
+            return false;
+        }
+        ReleaseObjectRequested = false;
+        return true;
+    }
 }
