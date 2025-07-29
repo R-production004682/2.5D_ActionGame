@@ -3361,7 +3361,7 @@ GameObject:
   - component: {fileID: 828030639}
   - component: {fileID: 828030638}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: EventObject
   m_TagString: MovableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4227,7 +4227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1045445716}
   m_Layer: 0
-  m_Name: Coins
+  m_Name: =====Coins=====
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4270,7 +4270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1172760975}
   m_Layer: 0
-  m_Name: Memos
+  m_Name: =====Memos=====
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6928,9 +6928,9 @@ SceneRoots:
   - {fileID: 764311493}
   - {fileID: 1859122619}
   - {fileID: 1045445716}
+  - {fileID: 1172760975}
   - {fileID: 67055522}
   - {fileID: 1497121430}
   - {fileID: 608008}
   - {fileID: 2082357780}
   - {fileID: 828030642}
-  - {fileID: 1172760975}

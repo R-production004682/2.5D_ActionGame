@@ -14,7 +14,6 @@ public class PressurePad : MonoBehaviour, IGimmickEffect
 
     public void ApplyEnterEffect(Collider other)
     {
-        
     }
 
     public void ApplyStayEffect(Collider other)
