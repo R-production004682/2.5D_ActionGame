@@ -1,8 +1,6 @@
 using UnityEngine;
-
+using Const;
 public class DefaultPlayerInput : IPlayerInput
 {
-    public float GetHorizontal() => Input.GetAxis("Horizontal");
-
-    public bool isJumpPressed() => Input.GetKeyDown(KeyCode.Space);
+    public float GetHorizontal() => Input.GetAxis(InputType.HORIZONTAL);
 }

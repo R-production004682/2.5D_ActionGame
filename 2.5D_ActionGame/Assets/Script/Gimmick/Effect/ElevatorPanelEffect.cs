@@ -4,11 +4,11 @@ using UnityEngine;
 public class ElevatorPanelEffect : MonoBehaviour, IGimmickEffect
 {
     [SerializeField] private ElevatorID elevatorID;
-    private GimmickContext context;
+    private GimmickContext gimmickContext;
 
     public void Initialize(GimmickContext context)
     {
-        this.context = context;
+        this.gimmickContext = context;
     }
 
     /// <summary>

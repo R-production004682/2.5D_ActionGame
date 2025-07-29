@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private IPlayerAction moveAction;
     private IPlayerAction jumpAction;
     private IPlayerAction wallJumpAction;
+    private IPlayerAction playerDragAction;
     private IPlayerInput playerInput;
 
     private Transform currentPlatform;
@@ -39,12 +40,14 @@ public class PlayerController : MonoBehaviour
         moveAction = new MoveAction();
         jumpAction = new JumpAction();
         wallJumpAction = new WallJumpAction();
+        playerDragAction = new PlayerDragAction();
         playerInput = new DefaultPlayerInput();
 
         playerLives.Initialize(playerContext);
         moveAction.Initialize(playerContext, playerInput);
         jumpAction.Initialize(playerContext, playerInput);
         wallJumpAction.Initialize(playerContext, playerInput);
+        playerDragAction.Initialize(playerContext, playerInput);
     }
 
     private void Update() {}
@@ -52,13 +55,21 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateGroundCheck();
-        wallJumpAction.Execute();
-        jumpAction.Execute();
 
-        if(!playerContext.state.isStickingToWall)
+        //物掴んでいる場合は、ジャンプ系の動作を行わない
+        if (!playerContext.state.isHoldingObject)
+        {
+            wallJumpAction.Execute();
+            jumpAction.Execute();
+        }
+
+        // 壁に張り付いている場合は、移動を行わない
+        if (!playerContext.state.isStickingToWall)
         {
             moveAction.Execute();
         }
+
+        playerDragAction.Execute();
     }
 
     /// <summary>
@@ -93,6 +104,8 @@ public class PlayerController : MonoBehaviour
             currentPlatform = null;
             platformVelocity = Vector3.zero;
         }
+
+        Debug.Log($"Grounded: {state.isGrounded}, Platform: {currentPlatform?.name ?? "None"}");
     }
 
     public Vector3 GetPlatformVelocity()
